@@ -72,21 +72,12 @@ function compile_project {
   echo -e "${GREEN}Minotari 项目编译完成！${RESET}"
 }
 
-# 启动 Minotari 节点（带挖矿）
+# 启动 Minotari 节点（固定命令）
 function start_node {
-  echo -e "${YELLOW}请输入你的 Minotari 钱包地址（用于接收挖矿奖励）:${RESET}"
-  echo -e "${BLUE}格式示例：/onion3/abcxyz123456789abcdef.onion:18142${RESET}"
-  read -r WALLET_ADDRESS
-
-  if [[ -z "$WALLET_ADDRESS" ]]; then
-    echo -e "${RED}错误：钱包地址不能为空。${RESET}"
-    return
-  fi
-
-  echo -e "${GREEN}正在启动 Minotari 节点并将奖励发送至：$WALLET_ADDRESS${RESET}"
-  screen -S minotari_node_session ./target/release/minotari_node --mining-enabled --mining-wallet-address "$WALLET_ADDRESS"
-  echo -e "${YELLOW}节点已启动，正在挖矿，您已进入 screen 会话。${RESET}"
-  echo "按 Ctrl + A 然后按 D 返回终端。"
+  echo -e "${GREEN}正在启动 Minotari 节点（挖矿中）...${RESET}"
+  screen -S minotari_node_session ./target/release/minotari_node --base-path /root/.tari --config /root/.tari/mainnet/config/config.toml
+  echo -e "${YELLOW}节点已启动并进入 screen，会话名称：minotari_node_session${RESET}"
+  echo "按 Ctrl + A 然后按 D 可返回终端。"
 }
 
 # 启动钱包查看程序
